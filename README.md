@@ -12,7 +12,7 @@ The script will generate the following files:
 - messages-ja.json
 - messages_ja.properties
 
-This files can then be added to the Studio project
+These files can then be added to the Studio project
 
 ## Important Note
 
