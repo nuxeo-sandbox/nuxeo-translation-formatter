@@ -12,12 +12,13 @@ const LANGUAGE_ISO = {
 
 const optionDefinitions = [
   { name: 'inputFile', type: String, defaultValue: "translations.csv"  },
+  { name: 'outputFolder', type: String, defaultValue: "output"  },
 ]
 
 const options = commandLineArgs(optionDefinitions);
 
 //create output dir if it does not exist
-const outputDirName = 'output';
+const outputDirName = options.outputFolder;
 
 if (!fs.existsSync(outputDirName)){
     fs.mkdirSync(outputDirName);
@@ -90,11 +91,11 @@ function toUnicodeNotation(string) {
 
 function writeTranslationsToFile() {
  languages.forEach(function(item) {
-   let uiFileName = item.iso === "en_US" ? "output/messages.json" : 'output/messages-'+item.iso+'.json';
+   let uiFileName = item.iso === "en_US" ? outputDirName+"/messages.json" : outputDirName+'/messages-'+item.iso+'.json';
    const uiTranslationStream = fs.createWriteStream(uiFileName);
    uiTranslationStream.write(JSON.stringify(item.uiTranslations, null, 1));
    uiTranslationStream.close();
-   const serverTranslationStream = fs.createWriteStream('output/messages_'+item.iso+'.properties');
+   const serverTranslationStream = fs.createWriteStream(outputDirName+'/messages_'+item.iso+'.properties');
    serverTranslationStream.write(item.serverTranslations.join('\n'));
    serverTranslationStream.close();
  })
